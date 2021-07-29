@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Container } from 'react-bulma-components';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import Home from './Home';
@@ -11,8 +12,7 @@ const App = () => {
   const loggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   return (
-    <div id="app">
-      <h1>Hello</h1>
+    <Container id="app">
       <Switch>
         <Route exact path="/">
           {loggedIn ? <Home /> : <Redirect to="/login" />}
@@ -24,7 +24,7 @@ const App = () => {
           <SignUpForm />
         </Route>
       </Switch>
-    </div>
+    </Container>
   );
 };
 
