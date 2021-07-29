@@ -7,8 +7,6 @@ import SignUpForm from './SignUpForm';
 import Home from './Home';
 
 const App = () => {
-  console.log('app');
-
   const loggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   return (

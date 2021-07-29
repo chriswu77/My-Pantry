@@ -35,10 +35,12 @@ const SignUpForm = (props) => {
 
     try {
       const response = await axios.post('/user', { username, password });
-      if (!response.data.errmsg) {
+
+      if (!response.data.error) {
         console.log('signed up successfully');
         setErrorText(null);
-        setRedirectTo('/login');
+        console.log('responseData', response.data);
+        // setRedirectTo('/login');
       } else {
         setErrorText('Username is already taken');
         console.log('username already taken');
