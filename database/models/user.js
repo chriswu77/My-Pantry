@@ -14,7 +14,7 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.methods.checkPasswords = async function (inputPassword) {
+userSchema.methods.checkPassword = async function (inputPassword) {
   const result = await bcrypt.compare(inputPassword, this.password);
   return result;
 };
@@ -24,12 +24,13 @@ userSchema.methods.hashPassword = async function (plainTextPassword) {
   return hashedPassword;
 };
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     console.log('password was not modified. no hashing needed');
     return next();
   }
-  this.password = this.hashPassword(this.password);
+
+  this.password = await this.hashPassword(this.password);
   console.log('hashed password in pre save');
   return next();
 });
