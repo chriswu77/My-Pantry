@@ -1,41 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bulma-components';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { Form, Button, Message } from 'react-bulma-components';
+import { Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
+import { authActions } from '../../store/auth';
+
+const SignUpDiv = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SignUpLink = styled(Button)`
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  margin-left: 5px;
+`;
 
 const LoginForm = (props) => {
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [redirectTo, setRedirectTo] = useState();
+  const [errorText, setErrorText] = useState();
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(username, password);
+    try {
+      const response = await axios.post('/user/login', { username, password });
+      if (response.status === 200) {
+        dispatch(authActions.logIn(response.data.userId));
+        setRedirectTo('/home');
+      }
+    } catch (err) {
+      console.log('login error:', err);
+    }
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <Form.Field>
-        <Form.Label>Username</Form.Label>
-        <Form.Control>
-          <Form.Input
-            type="text"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </Form.Control>
-      </Form.Field>
+    <>
+      {redirectTo && <Redirect to={{ pathname: redirectTo }} />}
+      <form onSubmit={onSubmit}>
+        <Form.Field>
+          <Form.Label>Username</Form.Label>
+          <Form.Control>
+            <Form.Input
+              type="text"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </Form.Control>
+        </Form.Field>
 
-      <Form.Field>
-        <Form.Label>Password</Form.Label>
-        <Form.Control>
-          <Form.Input
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Control>
-      </Form.Field>
+        <Form.Field>
+          <Form.Label>Password</Form.Label>
+          <Form.Control>
+            <Form.Input
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Control>
+        </Form.Field>
 
-      <Button type="submit">Login</Button>
-    </form>
+        <Button type="submit">Login</Button>
+      </form>
+
+      {errorText && <Message.Body color="danger">{errorText}</Message.Body>}
+
+      <SignUpDiv>
+        <span>Don&apos;t have an account?</span>
+        <SignUpLink to="/signup" renderAs={Link}>
+          Sign up
+        </SignUpLink>
+      </SignUpDiv>
+    </>
   );
 };
 
