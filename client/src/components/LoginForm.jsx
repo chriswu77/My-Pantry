@@ -21,8 +21,8 @@ const SignUpLink = styled(Button)`
 const LoginForm = () => {
   const dispatch = useDispatch();
 
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [redirectTo, setRedirectTo] = useState();
   const [errorText, setErrorText] = useState();
 

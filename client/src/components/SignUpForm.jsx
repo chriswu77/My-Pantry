@@ -4,9 +4,9 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 const SignUpForm = (props) => {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [redirectTo, setRedirectTo] = useState();
   const [errorText, setErrorText] = useState();
 
@@ -42,7 +42,6 @@ const SignUpForm = (props) => {
         console.log('responseData', response.data);
         setRedirectTo('/login');
       } else {
-        // setErrorText('Username is already taken');
         setErrorText(response.data.error);
         console.log('username already taken');
       }

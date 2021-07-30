@@ -25,11 +25,7 @@ const controllers = {
 
   login: (req, res) => {
     console.log('logged in', req.user);
-    if (req.user) {
-      res.status(200).send({ _id: req.user._id });
-    }
-
-    res.status(404).send('no user found');
+    res.status(200).send({ _id: req.user._id });
   },
 
   getUserId: (req, res) => {
