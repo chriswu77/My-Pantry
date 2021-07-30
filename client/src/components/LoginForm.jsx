@@ -18,7 +18,7 @@ const SignUpLink = styled(Button)`
   margin-left: 5px;
 `;
 
-const LoginForm = (props) => {
+const LoginForm = () => {
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState();
@@ -31,12 +31,11 @@ const LoginForm = (props) => {
 
     try {
       const response = await axios.post('/user/login', { username, password });
-      if (response.status === 200) {
-        dispatch(authActions.logIn(response.data.userId));
-        setRedirectTo('/home');
-      }
+      dispatch(authActions.logIn(response.data._id));
+      setRedirectTo('/home');
     } catch (err) {
       console.log('login error:', err);
+      setErrorText('Invalid username or password');
     }
   };
 

@@ -40,9 +40,10 @@ const SignUpForm = (props) => {
         console.log('signed up successfully');
         setErrorText(null);
         console.log('responseData', response.data);
-        // setRedirectTo('/login');
+        setRedirectTo('/login');
       } else {
-        setErrorText('Username is already taken');
+        // setErrorText('Username is already taken');
+        setErrorText(response.data.error);
         console.log('username already taken');
       }
     } catch (err) {

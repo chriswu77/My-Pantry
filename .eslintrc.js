@@ -23,5 +23,6 @@ module.exports = {
     'jsx-a11y/control-has-associated-label': 'off',
     'prefer-destructuring': 'warn',
     'no-underscore-dangle': 'off',
+    'react/jsx-props-no-spreading': 'off',
   },
 };

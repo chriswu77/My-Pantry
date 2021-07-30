@@ -4,6 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const passport = require('./passport/index');
 const db = require('../database/index');
 const router = require('./router');
 const mySecret = require('../secret');
@@ -25,10 +26,14 @@ app.use(
   })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/', router);
 
 app.use((req, res, next) => {
   console.log('req.session', req.session);
+  console.log('req', req.user);
   next();
 });
 
