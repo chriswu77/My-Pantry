@@ -32,7 +32,7 @@ const LoginForm = () => {
     try {
       const response = await axios.post('/user/login', { username, password });
       dispatch(authActions.logIn(response.data._id));
-      setRedirectTo('/home');
+      setRedirectTo('/');
     } catch (err) {
       console.log('login error:', err);
       setErrorText('Invalid username or password');

@@ -28,6 +28,15 @@ const controllers = {
     res.status(200).send({ _id: req.user._id });
   },
 
+  logout: (req, res) => {
+    if (req.user) {
+      req.logout();
+      res.status(200).send('User logged out');
+    } else {
+      res.status(404).send('No user signed in');
+    }
+  },
+
   getUserId: (req, res) => {
     console.log('get user route');
     console.log(req.user);
