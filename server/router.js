@@ -22,6 +22,13 @@ router.post('/ingredients/search', controllers.search);
 
 router.get('/user/:userId', controllers.getUser);
 
+router.get('/user/:userId/ingredients', controllers.getIngredients);
+
 router.post('/user/:userId/ingredients', controllers.addIngredient);
+
+router.delete(
+  '/user/:userId/ingredients/:ingredientId',
+  controllers.removeIngredient
+);
 
 module.exports = router;
