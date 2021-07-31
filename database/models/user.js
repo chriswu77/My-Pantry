@@ -12,8 +12,8 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  ingredients: { type: Schema.Types.ObjectId, ref: 'Ingredient' },
-  recipes: { type: Schema.Types.ObjectId, ref: 'Recipe' },
+  ingredients: [{ type: Schema.Types.ObjectId, ref: 'Ingredient' }],
+  recipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
 });
 
 userSchema.methods.checkPassword = async function (inputPassword) {

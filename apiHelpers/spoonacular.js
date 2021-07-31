@@ -9,6 +9,7 @@ const searchIngredients = async (query) => {
         apiKey,
         query,
         number: 10,
+        metaInformation: true,
       },
     }
   );

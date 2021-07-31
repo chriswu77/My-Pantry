@@ -18,4 +18,10 @@ router.post(
 
 router.get('/user/logout', controllers.logout);
 
+router.post('/ingredients/search', controllers.search);
+
+router.get('/user/:userId', controllers.getUser);
+
+router.post('/user/:userId/ingredients', controllers.addIngredient);
+
 module.exports = router;
