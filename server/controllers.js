@@ -65,7 +65,7 @@ const controllers = {
     }
   },
 
-  search: async (req, res) => {
+  searchIngredient: async (req, res) => {
     console.log('search ingredients');
     try {
       const { query } = req.body;
@@ -132,6 +132,20 @@ const controllers = {
         $pull: { ingredients: mongoose.Types.ObjectId(ingredientId) },
       });
       res.status(200).send('Successfuly removed ingredient');
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  },
+
+  searchRecipes: async (req, res) => {
+    const { ingredientsArr, ignorePantry = true } = req.body;
+
+    try {
+      const searchResults = await searchRecipesByIngredients(
+        ingredientsArr,
+        ignorePantry
+      );
+      res.status(200).send(searchResults);
     } catch (err) {
       res.status(400).send(err);
     }

@@ -18,7 +18,9 @@ router.post(
 
 router.get('/user/logout', controllers.logout);
 
-router.post('/ingredients/search', controllers.search);
+router.post('/ingredients/search', controllers.searchIngredient);
+
+router.post('/recipes/search', controllers.searchRecipes);
 
 router.get('/user/:userId', controllers.getUser);
 

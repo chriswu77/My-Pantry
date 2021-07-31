@@ -16,10 +16,7 @@ const searchIngredients = async (query) => {
   return response.data;
 };
 
-const searchRecipesByIngredients = async (
-  ingredientsArr,
-  ignorePantry = true
-) => {
+const searchRecipesByIngredients = async (ingredientsArr, ignorePantry) => {
   const response = await axios.get(
     'https://api.spoonacular.com/recipes/findByIngredients',
     {
