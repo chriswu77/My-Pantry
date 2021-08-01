@@ -195,6 +195,31 @@ const controllers = {
       res.status(400).send(err);
     }
   },
+
+  getRecipes: async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+      const foundUser = await User.findById(userId).populate('recipes');
+
+      res.status(200).send(foundUser.recipes);
+    } catch (err) {
+      res.status(404).send(err);
+    }
+  },
+
+  removeRecipe: async (req, res) => {
+    const { userId, recipeId } = req.params;
+
+    try {
+      await User.findByIdAndUpdate(userId, {
+        $pull: { recipes: mongoose.Types.ObjectId(recipeId) },
+      });
+      res.status(200).send('Successfuly removed recipe');
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  },
 };
 
 module.exports = controllers;
