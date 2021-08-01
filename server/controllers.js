@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../database/models/user');
 const Ingredient = require('../database/models/ingredient');
+const Recipe = require('../database/models/recipe');
 const {
   searchIngredients,
   searchRecipesByIngredients,
@@ -146,6 +147,50 @@ const controllers = {
         ignorePantry
       );
       res.status(200).send(searchResults);
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  },
+
+  getRecipeInfoTest: async (req, res) => {
+    const { recipeId } = req.params;
+
+    try {
+      const results = await getRecipeInfo(recipeId);
+      res.status(200).send(results);
+    } catch (err) {
+      res.status(404).send(err);
+    }
+  },
+
+  addRecipe: async (req, res) => {
+    const { userId } = req.params;
+    const { recipeId } = req.body;
+
+    try {
+      const foundUser = await User.findById(userId);
+      const foundRecipe = await Recipe.findOne({ id: recipeId });
+
+      if (foundRecipe) {
+        const alreadyHasRecipe = await User.findOne({
+          recipes: foundRecipe._id,
+        });
+
+        if (alreadyHasRecipe) {
+          res.status(200).send('User already added this recipe');
+        } else {
+          foundUser.recipes.push(foundRecipe);
+          await foundUser.save();
+          res.status(200).send('Saved recipe to user');
+        }
+      } else {
+        const recipeData = await getRecipeInfo(recipeId);
+        const newRecipe = new Recipe(recipeData);
+        await newRecipe.save();
+        foundUser.recipes.push(newRecipe);
+        await foundUser.save();
+        res.status(200).send('Saved recipe to user');
+      }
     } catch (err) {
       res.status(400).send(err);
     }

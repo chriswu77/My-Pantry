@@ -33,4 +33,8 @@ router.delete(
   controllers.removeIngredient
 );
 
+router.get('/recipes/:recipeId', controllers.getRecipeInfoTest);
+
+router.post('/user/:userId/recipes', controllers.addRecipe);
+
 module.exports = router;
