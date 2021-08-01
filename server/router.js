@@ -26,7 +26,8 @@ router.get('/recipes/:recipeId', controllers.getRecipeInfoTest);
 router.get('/user/:userId', controllers.getUser);
 
 router.get('/user/:userId/ingredients', controllers.getIngredients);
-router.post('/user/:userId/ingredients', controllers.addIngredient);
+// router.post('/user/:userId/ingredients', controllers.addIngredient);
+router.post('/user/:userId/ingredients', controllers.addIngredients);
 router.delete(
   '/user/:userId/ingredients/:ingredientId',
   controllers.removeIngredient

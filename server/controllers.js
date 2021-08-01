@@ -7,6 +7,7 @@ const {
   searchRecipesByIngredients,
   getRecipeInfo,
 } = require('../apiHelpers/spoonacular');
+const { resolveIngredient } = require('./helperFunctions');
 
 const controllers = {
   createUser: async (req, res) => {
@@ -120,6 +121,24 @@ const controllers = {
         await foundUser.save();
         res.status(200).send('Saved ingredient to user');
       }
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  },
+
+  addIngredients: async (req, res) => {
+    const { userId } = req.params;
+    const { ingredients } = req.body;
+
+    try {
+      const foundUser = await User.findById(userId);
+
+      for (const ingredient of ingredients) {
+        // eslint-disable-next-line no-await-in-loop
+        await resolveIngredient(ingredient, foundUser);
+      }
+
+      res.status(200).send('Saved ingredients to user');
     } catch (err) {
       res.status(400).send(err);
     }
