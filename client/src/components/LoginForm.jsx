@@ -32,7 +32,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/user/login', { username, password });
+      const response = await axios.post('/users/login', { username, password });
       dispatch(authActions.logIn(response.data._id));
       setRedirectTo('/');
     } catch (err) {

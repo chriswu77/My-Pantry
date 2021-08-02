@@ -14,7 +14,7 @@ const App = () => {
   const [wasInitialized, setWasInitialized] = useState(false);
 
   const getUser = async () => {
-    const response = await axios.get('/user');
+    const response = await axios.get('/users');
     console.log('get user response: ', response.data);
     if (response.data.userId) {
       console.log('saving user id in state');
@@ -33,7 +33,7 @@ const App = () => {
   useEffect(async () => {
     if (userId) {
       // get saved ingredients
-      const ingredientsData = await axios.get(`/user/${userId}/ingredients`);
+      const ingredientsData = await axios.get(`/users/${userId}/ingredients`);
       dispatch(ingredientsActions.set(ingredientsData.data));
     }
   }, [userId]);

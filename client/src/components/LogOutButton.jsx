@@ -11,7 +11,7 @@ const LogOutButton = () => {
   const history = useHistory();
 
   const onClick = async () => {
-    await axios.get('/user/logout');
+    await axios.get('/users/logout');
     dispatch(authActions.logOut());
     history.push('/login');
   };
