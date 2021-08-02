@@ -5,12 +5,14 @@ import { Button } from 'react-bulma-components';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '../../store/auth';
+import { ingredientsActions } from '../../store/ingredients';
 
 const LogOutButton = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const onClick = async () => {
+    dispatch(ingredientsActions.set([]));
     await axios.get('/users/logout');
     dispatch(authActions.logOut());
     history.push('/login');
