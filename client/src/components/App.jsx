@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container } from 'react-bulma-components';
 import axios from 'axios';
 import { authActions } from '../../store/auth';
-import LoginForm from './LoginForm';
-import SignUpForm from './SignUpForm';
+import LandingPage from './LandingPage';
 import Home from './Home';
 import PrivateRoute from './PrivateRoute';
 
@@ -32,17 +30,16 @@ const App = () => {
   }, []);
 
   return (
-    <Container id="app">
+    <div id="app">
       <Switch>
-        <Route exact path="/login" component={LoginForm} />
-        <Route exact path="/signup" component={SignUpForm} />
+        <Route exact path="/login" component={LandingPage} />
         <PrivateRoute
           path="/"
           component={Home}
           wasInitialized={wasInitialized}
         />
       </Switch>
-    </Container>
+    </div>
   );
 };
 

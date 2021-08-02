@@ -57,6 +57,58 @@ const recipeSchema = new Schema({
   sourceUrl: String,
   image: String,
   imageType: String,
+  nutrition: {
+    nutrients: [
+      {
+        name: String,
+        title: String,
+        amount: Number,
+        unit: String,
+        percentOfDailyNeeds: Number,
+      },
+    ],
+    properties: [
+      {
+        name: String,
+        title: String,
+        amount: Number,
+        unit: String,
+      },
+    ],
+    flavonoids: [
+      {
+        name: String,
+        title: String,
+        amount: Number,
+        unit: String,
+      },
+    ],
+    ingredients: [
+      {
+        id: Number,
+        name: String,
+        amount: Number,
+        unit: String,
+        nutrients: [
+          {
+            title: String,
+            name: String,
+            amount: Number,
+            unit: String,
+          },
+        ],
+      },
+    ],
+    caloricBreakdown: {
+      percentProtein: Number,
+      percentFat: Number,
+      percentCarbs: Number,
+    },
+    weightPerServing: {
+      amount: Number,
+      unit: String,
+    },
+  },
   summary: String,
   cuisines: [String],
   dishTypes: [String],

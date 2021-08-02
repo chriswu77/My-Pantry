@@ -158,7 +158,7 @@ const controllers = {
   },
 
   searchRecipes: async (req, res) => {
-    const { ingredientsArr, ignorePantry = true } = req.body;
+    const { ingredientsArr, ignorePantry = false } = req.body;
 
     try {
       const searchResults = await searchRecipesByIngredients(

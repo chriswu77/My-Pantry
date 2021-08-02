@@ -37,6 +37,7 @@ const getRecipeInfo = async (id) => {
     {
       params: {
         apiKey,
+        includeNutrition: true,
       },
     }
   );

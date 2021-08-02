@@ -6,6 +6,8 @@ import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { authActions } from '../../store/auth';
 
+const LoginFormDiv = styled.div``;
+
 const SignUpDiv = styled.div`
   display: flex;
   align-items: center;
@@ -40,7 +42,7 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <LoginFormDiv id="login-form">
       {redirectTo && <Redirect to={{ pathname: redirectTo }} />}
       <form onSubmit={onSubmit}>
         <Form.Field>
@@ -70,11 +72,12 @@ const LoginForm = () => {
 
       <SignUpDiv>
         <span>Don&apos;t have an account?</span>
-        <SignUpLink to="/signup" renderAs={Link}>
+        {/* <SignUpLink to="/signup" renderAs={Link}> */}
+        <SignUpLink to="#signup-form" renderAs={Link}>
           Sign up
         </SignUpLink>
       </SignUpDiv>
-    </>
+    </LoginFormDiv>
   );
 };
 

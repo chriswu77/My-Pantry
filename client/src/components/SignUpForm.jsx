@@ -3,7 +3,7 @@ import { Form, Button, Message } from 'react-bulma-components';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-const SignUpForm = (props) => {
+const SignUpForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -40,7 +40,8 @@ const SignUpForm = (props) => {
         console.log('signed up successfully');
         setErrorText(null);
         console.log('responseData', response.data);
-        setRedirectTo('/login');
+        // setRedirectTo('/login');
+        setRedirectTo('/');
       } else {
         setErrorText(response.data.error);
         console.log('username already taken');
@@ -51,7 +52,7 @@ const SignUpForm = (props) => {
   };
 
   return (
-    <>
+    <div id="signup-form">
       {redirectTo && <Redirect to={{ pathname: redirectTo }} />}
       <form onSubmit={onSubmit}>
         <Form.Field>
@@ -88,7 +89,7 @@ const SignUpForm = (props) => {
 
         {errorText && <Message.Body color="danger">{errorText}</Message.Body>}
       </form>
-    </>
+    </div>
   );
 };
 
