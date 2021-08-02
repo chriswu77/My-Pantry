@@ -3,13 +3,15 @@ import { Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { authActions } from '../../store/auth';
+import { ingredientsActions } from '../../store/ingredients';
 import LandingPage from './LandingPage';
 import Home from './Home';
 import PrivateRoute from './PrivateRoute';
 
 const App = () => {
-  const [wasInitialized, setWasInitialized] = useState(false);
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.auth.userId);
+  const [wasInitialized, setWasInitialized] = useState(false);
 
   const getUser = async () => {
     const response = await axios.get('/user');
@@ -21,13 +23,20 @@ const App = () => {
       console.log('no user found');
       dispatch(authActions.logOut());
     }
-
     setWasInitialized(true);
   };
 
   useEffect(() => {
     getUser();
   }, []);
+
+  useEffect(async () => {
+    if (userId) {
+      // get saved ingredients
+      const ingredientsData = await axios.get(`/user/${userId}/ingredients`);
+      dispatch(ingredientsActions.set(ingredientsData.data));
+    }
+  }, [userId]);
 
   return (
     <div id="app">
