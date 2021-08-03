@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Form, Button, Message } from 'react-bulma-components';
+import { Form, Button, Box, Notification } from 'react-bulma-components';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { authActions } from '../../store/auth';
 
-const LoginFormDiv = styled.div``;
+const LoginFormBox = styled(Box)``;
+
+const ErrorMessage = styled(Notification)`
+  width: fit-content;
+`;
 
 const SignUpDiv = styled.div`
   display: flex;
@@ -42,7 +46,7 @@ const LoginForm = () => {
   };
 
   return (
-    <LoginFormDiv id="login-form">
+    <LoginFormBox id="login-form">
       {redirectTo && <Redirect to={{ pathname: redirectTo }} />}
       <form onSubmit={onSubmit}>
         <Form.Field>
@@ -68,7 +72,9 @@ const LoginForm = () => {
         <Button type="submit">Login</Button>
       </form>
 
-      {errorText && <Message.Body color="danger">{errorText}</Message.Body>}
+      {errorText && (
+        <ErrorMessage className="is-danger is-light">{errorText}</ErrorMessage>
+      )}
 
       <SignUpDiv>
         <span>Don&apos;t have an account?</span>
@@ -77,7 +83,7 @@ const LoginForm = () => {
           Sign up
         </SignUpLink>
       </SignUpDiv>
-    </LoginFormDiv>
+    </LoginFormBox>
   );
 };
 

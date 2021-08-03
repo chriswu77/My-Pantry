@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Message } from 'react-bulma-components';
+import { Form, Button, Box, Notification } from 'react-bulma-components';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const ErrorMessage = styled(Notification)`
+  width: fit-content;
+`;
 
 const SignUpForm = () => {
   const [username, setUsername] = useState('');
@@ -52,7 +57,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div id="signup-form">
+    <Box id="signup-form">
       {redirectTo && <Redirect to={{ pathname: redirectTo }} />}
       <form onSubmit={onSubmit}>
         <Form.Field>
@@ -87,9 +92,13 @@ const SignUpForm = () => {
 
         <Button type="submit">Sign up</Button>
 
-        {errorText && <Message.Body color="danger">{errorText}</Message.Body>}
+        {errorText && (
+          <ErrorMessage className="is-danger is-light">
+            {errorText}
+          </ErrorMessage>
+        )}
       </form>
-    </div>
+    </Box>
   );
 };
 
