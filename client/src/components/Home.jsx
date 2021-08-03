@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import NavBar from './NavBar';
 import SearchBar from './SearchBar';
+import IngredientsList from './IngredientsList';
 
 const HomeDiv = styled.div`
   display: flex;
@@ -12,14 +13,22 @@ const HomeDiv = styled.div`
   padding-top: 40px;
 `;
 
+const Content = styled.div`
+  display: flex;
+  border: 1px solid #2d2d2d;
+`;
+
 const Home = (props) => {
   const userId = useSelector((state) => state.auth.userId);
 
   return (
     <HomeDiv>
       <NavBar />
-      <h1>Hi from Home Page!! {userId}</h1>
+      <h1>Hi user: {userId}</h1>
       <SearchBar />
+      <Content>
+        <IngredientsList />
+      </Content>
     </HomeDiv>
   );
 };
