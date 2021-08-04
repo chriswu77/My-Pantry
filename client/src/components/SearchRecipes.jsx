@@ -16,12 +16,12 @@ const StyledTitle = styled.h2`
 const SearchRecipes = () => {
   const ingredients = useSelector((state) => state.ingredients.ingredients);
 
-  const [searchedRecipes, setSearcedRecipes] = useState([]);
+  const [searchedRecipes, setSearchedRecipes] = useState([]);
 
   useEffect(async () => {
     const ingredientsArr = ingredients.map((ingredient) => ingredient.name);
     const response = await axios.post('/recipes/search', { ingredientsArr });
-    setSearcedRecipes(response.data);
+    setSearchedRecipes(response.data);
     console.log('searched recipes');
   }, [ingredients]);
 
