@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import NavBar from './NavBar';
 import SearchBar from './SearchBar';
 import IngredientsList from './IngredientsList';
+import SearchRecipes from './SearchRecipes';
 
 const HomeDiv = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ const Home = (props) => {
       <SearchBar />
       <Content>
         <IngredientsList />
+        <SearchRecipes />
       </Content>
     </HomeDiv>
   );
