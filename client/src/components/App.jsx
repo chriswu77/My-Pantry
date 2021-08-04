@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { authActions } from '../../store/auth';
 import { ingredientsActions } from '../../store/ingredients';
+import { recipesActions } from '../../store/recipes';
 import LandingPage from './LandingPage';
 import Home from './Home';
 import PrivateRoute from './PrivateRoute';
@@ -35,6 +36,9 @@ const App = () => {
       // get saved ingredients
       const ingredientsData = await axios.get(`/users/${userId}/ingredients`);
       dispatch(ingredientsActions.set(ingredientsData.data));
+      // get saved recipes
+      const recipesData = await axios.get(`/users/${userId}/recipes`);
+      dispatch(recipesActions.set(recipesData.data));
     }
   }, [userId]);
 
