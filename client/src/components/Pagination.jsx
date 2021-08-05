@@ -1,12 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'react-bulma-components';
+import { useDispatch, useSelector } from 'react-redux';
 import PaginationItem from './PaginationItem';
+import { paginationActions } from '../../store/pagination';
 
 const NavButton = styled(Button)``;
 
-const Pagination = (props) => {
-  const { current, total, goToPrev, goToNext, changePage } = props;
+const Pagination = () => {
+  const dispatch = useDispatch();
+  const current = useSelector((state) => state.pagination.currentPage);
+  const total = useSelector((state) => state.pagination.totalPages);
 
   return (
     <nav
@@ -17,50 +21,23 @@ const Pagination = (props) => {
       <NavButton
         className="pagination-previous"
         disabled={current === 1}
-        onClick={goToPrev}
+        onClick={() => dispatch(paginationActions.goToPrev())}
       >
         Previous
       </NavButton>
       <NavButton
         className="pagination-next"
         disabled={current === total}
-        onClick={goToNext}
+        onClick={() => dispatch(paginationActions.goToNext())}
       >
         Next
       </NavButton>
       <ul className="pagination-list">
-        <PaginationItem
-          number={1}
-          current={current}
-          total={total}
-          goToPrev={goToPrev}
-          goToNext={goToNext}
-          changePage={changePage}
-        />
-        <PaginationItem
-          number={2}
-          current={current}
-          total={total}
-          changePage={changePage}
-        />
-        <PaginationItem
-          number={3}
-          current={current}
-          total={total}
-          changePage={changePage}
-        />
-        <PaginationItem
-          number={4}
-          current={current}
-          total={total}
-          changePage={changePage}
-        />
-        <PaginationItem
-          number={5}
-          current={current}
-          total={total}
-          changePage={changePage}
-        />
+        <PaginationItem number={1} />
+        <PaginationItem number={2} />
+        <PaginationItem number={3} />
+        <PaginationItem number={4} />
+        <PaginationItem number={5} />
       </ul>
     </nav>
   );

@@ -1,11 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'react-bulma-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { paginationActions } from '../../store/pagination';
 
 const PageButton = styled(Button)``;
 
 const PaginationItem = (props) => {
-  const { number, current, total, changePage } = props;
+  const { number } = props;
+
+  const dispatch = useDispatch();
+  const current = useSelector((state) => state.pagination.currentPage);
+  const total = useSelector((state) => state.pagination.totalPages);
 
   let listItem;
 
@@ -16,7 +22,7 @@ const PaginationItem = (props) => {
           className={`pagination-link ${
             current === number ? 'is-current' : ''
           }`}
-          onClick={() => changePage(number)}
+          onClick={() => dispatch(paginationActions.changePage(number))}
         >
           {number}
         </PageButton>

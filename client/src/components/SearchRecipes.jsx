@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Pagination from './Pagination';
 import SearchRecipeItem from './SearchRecipeItem';
+import { paginationActions } from '../../store/pagination';
 
 const RecipesContainer = styled.div`
   display: flex;
@@ -14,14 +15,22 @@ const StyledTitle = styled.h2`
   margin: 0 !important;
 `;
 
+const SearchRecipesList = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 1000px;
+  overflow-y: auto;
+`;
+
 const SearchRecipes = () => {
+  const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const currentPage = useSelector((state) => state.pagination.currentPage);
+  const totalPages = useSelector((state) => state.pagination.totalPages);
+  const resultsPerPage = 20;
 
   const [searchedRecipes, setSearchedRecipes] = useState([]);
   const [currentRecipes, setCurrentRecipes] = useState([]);
-  const [currentPage, setCurrentPage] = useState();
-  const [totalPages, setTotalPages] = useState();
-  const resultsPerPage = 20;
 
   useEffect(async () => {
     const ingredientsArr = ingredients.map((ingredient) => ingredient.name);
@@ -32,8 +41,9 @@ const SearchRecipes = () => {
 
   useEffect(() => {
     if (searchedRecipes.length > 0) {
-      setTotalPages(Math.round(searchedRecipes.length / resultsPerPage));
-      setCurrentPage(1);
+      const total = Math.round(searchedRecipes.length / resultsPerPage);
+      dispatch(paginationActions.setTotal(total));
+      dispatch(paginationActions.changePage(1));
     }
   }, [searchedRecipes]);
 
@@ -44,38 +54,20 @@ const SearchRecipes = () => {
       const slicedArr = searchedRecipes.slice(startIndex, endIndex);
       setCurrentRecipes(slicedArr);
     }
-  }, [currentPage, totalPages]);
-
-  const goToPrev = () => {
-    setCurrentPage(currentPage - 1);
-  };
-
-  const goToNext = () => {
-    setCurrentPage(currentPage + 1);
-  };
-
-  const changePage = (pageNum) => {
-    setCurrentPage(pageNum);
-  };
+  }, [currentPage, totalPages, searchedRecipes]);
 
   let content;
 
-  if (currentRecipes.length > 0) {
+  if (searchedRecipes.length > 0 && currentRecipes.length > 0) {
     content = (
       <RecipesContainer>
         <StyledTitle className="title is-3">Available recipes</StyledTitle>
-        {currentRecipes.map((recipe) => (
-          <SearchRecipeItem key={recipe.id} recipe={recipe} />
-        ))}
-        {totalPages > 1 && (
-          <Pagination
-            current={currentPage}
-            total={totalPages}
-            goToPrev={goToPrev}
-            goToNext={goToNext}
-            changePage={changePage}
-          />
-        )}
+        <SearchRecipesList>
+          {currentRecipes.map((recipe) => (
+            <SearchRecipeItem key={recipe.id} recipe={recipe} />
+          ))}
+        </SearchRecipesList>
+        {totalPages > 1 && <Pagination />}
       </RecipesContainer>
     );
   } else {
