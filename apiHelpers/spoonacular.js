@@ -23,7 +23,7 @@ const searchRecipesByIngredients = async (ingredientsArr, ignorePantry) => {
       params: {
         apiKey,
         ingredients: ingredientsArr.join(','),
-        number: 10,
+        number: 100,
         ignorePantry,
       },
     }
