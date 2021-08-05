@@ -3,6 +3,7 @@ import authSlice from './auth';
 import ingredientsSlice from './ingredients';
 import recipesSlice from './recipes';
 import paginationSlice from './pagination';
+import searchRecipes from './searchRecipes';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     ingredients: ingredientsSlice.reducer,
     recipes: recipesSlice.reducer,
     pagination: paginationSlice.reducer,
+    searchRecipes: searchRecipes.reducer,
   },
 });
 

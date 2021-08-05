@@ -5,10 +5,17 @@ import axios from 'axios';
 import Pagination from './Pagination';
 import SearchRecipeItem from './SearchRecipeItem';
 import { paginationActions } from '../../store/pagination';
+import { searchRecipesActions } from '../../store/searchRecipes';
+import SortButton from './SortButton';
 
 const RecipesContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const StyledTitle = styled.h2`
@@ -29,13 +36,15 @@ const SearchRecipes = () => {
   const totalPages = useSelector((state) => state.pagination.totalPages);
   const resultsPerPage = 20;
 
-  const [searchedRecipes, setSearchedRecipes] = useState([]);
+  const searchedRecipes = useSelector((state) => state.searchRecipes.results);
+  // const [searchedRecipes, setSearchedRecipes] = useState([]);
   const [currentRecipes, setCurrentRecipes] = useState([]);
 
   useEffect(async () => {
     const ingredientsArr = ingredients.map((ingredient) => ingredient.name);
     const response = await axios.post('/recipes/search', { ingredientsArr });
-    setSearchedRecipes(response.data);
+    // setSearchedRecipes(response.data);
+    dispatch(searchRecipesActions.set(response.data));
     console.log('searched recipes');
   }, [ingredients]);
 
@@ -61,7 +70,10 @@ const SearchRecipes = () => {
   if (searchedRecipes.length > 0 && currentRecipes.length > 0) {
     content = (
       <RecipesContainer>
-        <StyledTitle className="title is-3">Available recipes</StyledTitle>
+        <Header>
+          <StyledTitle className="title is-3">Available recipes</StyledTitle>
+          <SortButton />
+        </Header>
         <SearchRecipesList>
           {currentRecipes.map((recipe) => (
             <SearchRecipeItem key={recipe.id} recipe={recipe} />
