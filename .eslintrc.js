@@ -24,5 +24,6 @@ module.exports = {
     'prefer-destructuring': 'warn',
     'no-underscore-dangle': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
   },
 };

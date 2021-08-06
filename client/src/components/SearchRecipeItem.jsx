@@ -89,12 +89,12 @@ const SearchRecipeItem = (props) => {
         <RecipeName className="title is-6">{recipe.title}</RecipeName>
         <IngredientsInfo>
           <RecipeText>
-            Missed ingredients {`(${recipe.missedIngredientCount})`}:{' '}
-            {missedIngredients}
-          </RecipeText>
-          <RecipeText>
             Used ingredients {`(${recipe.usedIngredientCount})`}:{' '}
             {usedIngredients}
+          </RecipeText>
+          <RecipeText>
+            Missed ingredients {`(${recipe.missedIngredientCount})`}:{' '}
+            {missedIngredients}
           </RecipeText>
           <RecipeText>
             Unused ingredients {`(${recipe.unusedIngredients.length})`}:{' '}

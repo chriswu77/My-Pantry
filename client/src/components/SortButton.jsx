@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import axios from 'axios';
-import { Dropdown } from 'react-bulma-components';
+import Select from 'react-select';
 import { searchRecipesActions } from '../../store/searchRecipes';
 
-const SortButton = (props) => {
+const options = [
+  { value: 'used', label: 'Used ingredients' },
+  { value: 'likes', label: 'Likes' },
+];
+
+const ButtonDiv = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const customStyles = {
+  valueContainer: (provided) => ({
+    ...provided,
+    width: 145,
+  }),
+};
+
+const SortButton = () => {
   const dispatch = useDispatch();
   const sortBy = useSelector((state) => state.searchRecipes.sortBy);
   const searchedRecipes = useSelector((state) => state.searchRecipes.results);
@@ -30,22 +46,24 @@ const SortButton = (props) => {
     }
   }, [sortBy]);
 
-  const onChange = (selected) => {
-    if (sortBy !== selected) {
-      dispatch(searchRecipesActions.sort(selected));
+  const onChange = (option) => {
+    if (sortBy !== option.value) {
+      dispatch(searchRecipesActions.sort(option.value));
     }
   };
 
   return (
-    <Dropdown
-      value={sortBy}
-      label={`Sort by: ${sortBy === 'used' ? 'Used Ingredients' : 'Likes'}`}
-      color="info"
-      onChange={onChange}
-    >
-      <Dropdown.Item value="used">Used ingredients</Dropdown.Item>
-      <Dropdown.Item value="likes">Likes</Dropdown.Item>
-    </Dropdown>
+    <ButtonDiv>
+      <label>Sort by</label>
+      <Select
+        id="sort-button"
+        value={sortBy === 'used' ? options[0] : options[1]}
+        options={options}
+        onChange={onChange}
+        isSearchable={false}
+        styles={customStyles}
+      />
+    </ButtonDiv>
   );
 };
 
