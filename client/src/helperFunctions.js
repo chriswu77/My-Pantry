@@ -2,12 +2,12 @@ import axios from 'axios';
 
 const editFavorite = async (recipeId, userId, option) => {
   if (option === 'add') {
-    await axios.post(`/users/${userId}/recipes`, { recipeId });
+    await axios.post(`/api/users/${userId}/recipes`, { recipeId });
   } else {
-    await axios.delete(`/users/${userId}/recipes/${recipeId}`);
+    await axios.delete(`/api/users/${userId}/recipes/${recipeId}`);
   }
 
-  const recipeData = await axios.get(`/users/${userId}/recipes`);
+  const recipeData = await axios.get(`/api/users/${userId}/recipes`);
 
   return recipeData.data;
 };

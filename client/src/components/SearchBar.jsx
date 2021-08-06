@@ -39,7 +39,7 @@ const SearchBar = () => {
   useEffect(async () => {
     if (query) {
       try {
-        const response = await axios.post('/ingredients/search', { query });
+        const response = await axios.post('/api/ingredients/search', { query });
         setOptions(response.data);
       } catch (err) {
         console.log(err);
@@ -59,9 +59,11 @@ const SearchBar = () => {
   const onClick = async () => {
     try {
       // add ingredients to backend with post request
-      await axios.post(`/users/${userId}/ingredients`, { ingredients: values });
+      await axios.post(`/api/users/${userId}/ingredients`, {
+        ingredients: values,
+      });
       // get back ingredients from backend with get request
-      const response = await axios.get(`/users/${userId}/ingredients`);
+      const response = await axios.get(`/api/users/${userId}/ingredients`);
       // update redux ingredients state
       dispatch(ingredientsActions.set(response.data));
       // remove selected from local state to clear search

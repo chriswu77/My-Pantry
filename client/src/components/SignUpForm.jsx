@@ -39,7 +39,7 @@ const SignUpForm = () => {
     }
 
     try {
-      const response = await axios.post('/users', { username, password });
+      const response = await axios.post('/api/users', { username, password });
 
       if (!response.data.error) {
         console.log('signed up successfully');

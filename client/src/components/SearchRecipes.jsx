@@ -42,7 +42,9 @@ const SearchRecipes = () => {
 
   useEffect(async () => {
     const ingredientsArr = ingredients.map((ingredient) => ingredient.name);
-    const response = await axios.post('/recipes/search', { ingredientsArr });
+    const response = await axios.post('/api/recipes/search', {
+      ingredientsArr,
+    });
     // setSearchedRecipes(response.data);
     dispatch(searchRecipesActions.set(response.data));
     console.log('searched recipes');

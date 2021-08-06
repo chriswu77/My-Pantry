@@ -16,7 +16,7 @@ const App = () => {
   const [wasInitialized, setWasInitialized] = useState(false);
 
   const getUser = async () => {
-    const response = await axios.get('/users');
+    const response = await axios.get('/api/users');
     console.log('get user response: ', response.data);
     if (response.data.userId) {
       console.log('saving user id in state');
@@ -35,10 +35,12 @@ const App = () => {
   useEffect(async () => {
     if (userId) {
       // get saved ingredients
-      const ingredientsData = await axios.get(`/users/${userId}/ingredients`);
+      const ingredientsData = await axios.get(
+        `/api/users/${userId}/ingredients`
+      );
       dispatch(ingredientsActions.set(ingredientsData.data));
       // get saved recipes
-      const recipesData = await axios.get(`/users/${userId}/recipes`);
+      const recipesData = await axios.get(`/api/users/${userId}/recipes`);
       dispatch(recipesActions.set(recipesData.data));
     }
   }, [userId]);

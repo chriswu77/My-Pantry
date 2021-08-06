@@ -40,8 +40,10 @@ const IngredientsListItem = (props) => {
   const dispatch = useDispatch();
 
   const onClick = async () => {
-    await axios.delete(`/users/${userId}/ingredients/${ingredient._id}`);
-    const updatedIngredients = await axios.get(`/users/${userId}/ingredients`);
+    await axios.delete(`/api/users/${userId}/ingredients/${ingredient._id}`);
+    const updatedIngredients = await axios.get(
+      `/api/users/${userId}/ingredients`
+    );
     dispatch(ingredientsActions.set(updatedIngredients.data));
   };
 

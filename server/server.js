@@ -29,7 +29,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', router);
+app.use('/api', router);
 
 app.use((req, res, next) => {
   console.log('req.session', req.session);

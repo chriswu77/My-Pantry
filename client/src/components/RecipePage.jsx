@@ -23,7 +23,7 @@ const RecipePage = (props) => {
       setSelectRecipe(foundRecipe);
     } else {
       // if it isnt then do a get request to the server and grab the info
-      const results = await axios.get(`/recipes/${id}`);
+      const results = await axios.get(`/api/recipes/${id}`);
       setSelectRecipe(results.data);
     }
   }, []);

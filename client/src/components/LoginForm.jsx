@@ -36,7 +36,10 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/users/login', { username, password });
+      const response = await axios.post('/api/users/login', {
+        username,
+        password,
+      });
       dispatch(authActions.logIn(response.data._id));
       setRedirectTo('/');
     } catch (err) {
