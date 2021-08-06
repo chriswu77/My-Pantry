@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Button } from 'react-bulma-components';
+import { Link } from 'react-router-dom';
 import editFavorite from '../helperFunctions';
 import { recipesActions } from '../../store/recipes';
 
@@ -65,7 +66,9 @@ const SearchRecipeItem = (props) => {
     }
   }, [recipe]);
 
-  const onClick = async () => {
+  const onClick = async (e) => {
+    e.preventDefault();
+
     if (isFavorite) {
       const savedRecipe = recipes.find((cur) => cur.id === recipe.id);
       const newRecipeData = await editFavorite(
@@ -83,35 +86,37 @@ const SearchRecipeItem = (props) => {
   };
 
   return (
-    <RecipeCard>
-      <RecipePic src={recipe.image} alt={recipe.title} />
-      <RecipeInfo>
-        <RecipeName className="title is-6">{recipe.title}</RecipeName>
-        <IngredientsInfo>
-          <RecipeText>
-            Used ingredients {`(${recipe.usedIngredientCount})`}:{' '}
-            {usedIngredients}
-          </RecipeText>
-          <RecipeText>
-            Missed ingredients {`(${recipe.missedIngredientCount})`}:{' '}
-            {missedIngredients}
-          </RecipeText>
-          <RecipeText>
-            Unused ingredients {`(${recipe.unusedIngredients.length})`}:{' '}
-            {unusedIngredients}
-          </RecipeText>
-        </IngredientsInfo>
-        <Footer>
-          <RecipeText>Likes: {recipe.likes}</RecipeText>
-          <FavoriteButton
-            color={isFavorite ? 'danger' : 'success'}
-            onClick={onClick}
-          >
-            {isFavorite ? 'Remove from' : 'Add to'} favorites
-          </FavoriteButton>
-        </Footer>
-      </RecipeInfo>
-    </RecipeCard>
+    <Link to={`/recipes/${recipe.id}`}>
+      <RecipeCard>
+        <RecipePic src={recipe.image} alt={recipe.title} />
+        <RecipeInfo>
+          <RecipeName className="title is-6">{recipe.title}</RecipeName>
+          <IngredientsInfo>
+            <RecipeText>
+              Used ingredients {`(${recipe.usedIngredientCount})`}:{' '}
+              {usedIngredients}
+            </RecipeText>
+            <RecipeText>
+              Missed ingredients {`(${recipe.missedIngredientCount})`}:{' '}
+              {missedIngredients}
+            </RecipeText>
+            <RecipeText>
+              Unused ingredients {`(${recipe.unusedIngredients.length})`}:{' '}
+              {unusedIngredients}
+            </RecipeText>
+          </IngredientsInfo>
+          <Footer>
+            <RecipeText>Likes: {recipe.likes}</RecipeText>
+            <FavoriteButton
+              color={isFavorite ? 'danger' : 'success'}
+              onClick={onClick}
+            >
+              {isFavorite ? 'Remove from' : 'Add to'} favorites
+            </FavoriteButton>
+          </Footer>
+        </RecipeInfo>
+      </RecipeCard>
+    </Link>
   );
 };
 

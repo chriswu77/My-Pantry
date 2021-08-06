@@ -8,6 +8,7 @@ import { recipesActions } from '../../store/recipes';
 import LandingPage from './LandingPage';
 import Home from './Home';
 import PrivateRoute from './PrivateRoute';
+import RecipePage from './RecipePage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,11 @@ const App = () => {
     <div id="app">
       <Switch>
         <Route exact path="/login" component={LandingPage} />
+        <PrivateRoute
+          path="/recipes/:id"
+          component={RecipePage}
+          wasInitialized={wasInitialized}
+        />
         <PrivateRoute
           path="/"
           component={Home}
