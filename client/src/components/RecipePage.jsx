@@ -30,6 +30,7 @@ const RecipePage = (props) => {
 
   return (
     <>
+      <NavBar />
       {selectRecipe && (
         <Section>
           <Container>

@@ -1,37 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar } from 'react-bulma-components';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import LogOutButton from './LogOutButton';
 
-const CustomNavBar = styled(Navbar)`
-  display: flex;
-`;
-
-const CustomMenu = styled(Navbar.Menu)`
-  display: flex;
-  justify-content: flex-end !important;
-  margin: 0 !important;
-`;
-
 const NavBar = () => {
-  console.log('navbar');
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleActive = () => {
+    setIsActive(!isActive);
+  };
+
   return (
-    <CustomNavBar className="is-fixed-top is-dark">
-      <Navbar.Brand className="ml-0">
+    <Navbar className="is-fixed-top is-dark">
+      <Navbar.Brand>
         <Navbar.Item to="/" renderAs={Link}>
           Logo
         </Navbar.Item>
+        <Navbar.Burger onClick={toggleActive} />
       </Navbar.Brand>
-      <CustomMenu>
-        <Navbar.Container className="is-justify-content-flex-end m-0">
+      <Navbar.Menu className={isActive ? 'is-active' : ''}>
+        <Navbar.Container align="right">
           <Navbar.Item>Favorites</Navbar.Item>
           <Navbar.Item>
             <LogOutButton />
           </Navbar.Item>
         </Navbar.Container>
-      </CustomMenu>
-    </CustomNavBar>
+      </Navbar.Menu>
+    </Navbar>
   );
 };
 
