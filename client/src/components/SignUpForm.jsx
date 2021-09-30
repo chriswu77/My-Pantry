@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Box, Notification } from 'react-bulma-components';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -9,11 +10,19 @@ const ErrorMessage = styled(Notification)`
 `;
 
 const SignUpForm = () => {
+  const history = useHistory();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [redirectTo, setRedirectTo] = useState();
   const [errorText, setErrorText] = useState();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      history.push('/');
+    }
+  }, [isLoggedIn]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -45,8 +54,7 @@ const SignUpForm = () => {
         console.log('signed up successfully');
         setErrorText(null);
         console.log('responseData', response.data);
-        // setRedirectTo('/login');
-        setRedirectTo('/');
+        history.push('/login');
       } else {
         setErrorText(response.data.error);
         console.log('username already taken');
@@ -58,7 +66,6 @@ const SignUpForm = () => {
 
   return (
     <Box id="signup-form">
-      {redirectTo && <Redirect to={{ pathname: redirectTo }} />}
       <form onSubmit={onSubmit}>
         <Form.Field>
           <Form.Label>Username</Form.Label>

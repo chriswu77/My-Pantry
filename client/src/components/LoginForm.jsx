@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Form, Button, Box, Notification } from 'react-bulma-components';
 import { Link, useHistory } from 'react-router-dom';
@@ -25,12 +25,19 @@ const SignUpLink = styled(Button)`
 `;
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorText, setErrorText] = useState();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      history.push('/');
+    }
+  }, [isLoggedIn]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +48,6 @@ const LoginForm = () => {
         password,
       });
       dispatch(authActions.logIn(response.data._id));
-      history.push('/');
     } catch (err) {
       console.log('login error:', err);
       setErrorText('Invalid username or password');
@@ -80,8 +86,7 @@ const LoginForm = () => {
 
       <SignUpDiv>
         <span>Don&apos;t have an account?</span>
-        {/* <SignUpLink to="/signup" renderAs={Link}> */}
-        <SignUpLink to="#signup-form" renderAs={Link}>
+        <SignUpLink to="/signup" renderAs={Link}>
           Sign up
         </SignUpLink>
       </SignUpDiv>
