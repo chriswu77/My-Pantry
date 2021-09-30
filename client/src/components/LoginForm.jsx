@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Form, Button, Box, Notification } from 'react-bulma-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { authActions } from '../../store/auth';
 
@@ -26,10 +26,10 @@ const SignUpLink = styled(Button)`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [redirectTo, setRedirectTo] = useState();
   const [errorText, setErrorText] = useState();
 
   const onSubmit = async (e) => {
@@ -41,7 +41,7 @@ const LoginForm = () => {
         password,
       });
       dispatch(authActions.logIn(response.data._id));
-      setRedirectTo('/');
+      history.push('/');
     } catch (err) {
       console.log('login error:', err);
       setErrorText('Invalid username or password');
@@ -50,7 +50,6 @@ const LoginForm = () => {
 
   return (
     <LoginFormBox id="login-form">
-      {redirectTo && <Redirect to={{ pathname: redirectTo }} />}
       <form onSubmit={onSubmit}>
         <Form.Field>
           <Form.Label>Username</Form.Label>
