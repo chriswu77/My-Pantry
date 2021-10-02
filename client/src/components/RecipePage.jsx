@@ -18,22 +18,11 @@ import NutritionItem from './NutritionItem';
 /* STYLED COMPONENTS */
 const RecipeImage = styled.img``;
 
-const InfoList = styled.ul`
-  display: flex;
-  flex-direction: column;
-`;
-
-const InfoListLeft = styled(InfoList)`
-  border-right: 1px solid grey;
-  padding-right: 15px;
-  margin-right: 15px;
-`;
-
 const IngredientsList = styled.ul`
   display: flex;
   flex-direction: column;
+  list-style: inside;
   width: fit-content;
-  list-style-type: disc;
 `;
 
 const IngredientListItem = styled.li`
@@ -48,15 +37,20 @@ const RecipePage = () => {
   const [selectRecipe, setSelectRecipe] = useState();
 
   useEffect(async () => {
-    const foundRecipe = recipes.find((recipe) => recipe.id === Number(id));
+    if (recipes.length > 0) {
+      const foundRecipe = recipes.find((recipe) => recipe.id === Number(id));
 
-    if (foundRecipe) {
-      setSelectRecipe(foundRecipe);
+      if (foundRecipe) {
+        setSelectRecipe(foundRecipe);
+      } else {
+        const results = await axios.get(`/api/recipes/${id}`);
+        setSelectRecipe(results.data);
+      }
     } else {
       const results = await axios.get(`/api/recipes/${id}`);
       setSelectRecipe(results.data);
     }
-  }, []);
+  }, [recipes]);
 
   if (!selectRecipe) {
     return null;
@@ -109,14 +103,6 @@ const RecipePage = () => {
                     value={selectRecipe.dairyFree}
                   />
                 </Columns.Column>
-                <Columns.Column
-                  className="is-flex is-justify-content-center"
-                  size={12}
-                >
-                  <p
-                    dangerouslySetInnerHTML={{ __html: selectRecipe.summary }}
-                  />
-                </Columns.Column>
                 <Columns.Column size={12}>
                   <Columns>
                     {selectRecipe.nutrition.nutrients.map((nutrient) => (
@@ -124,7 +110,10 @@ const RecipePage = () => {
                     ))}
                   </Columns>
                 </Columns.Column>
-                <Columns.Column className="is-flex is-justify-content-center">
+                <Columns.Column className="is-flex is-flex-direction-column">
+                  <Heading renderAs="h2" size="4" className="mb-2">
+                    Ingredients
+                  </Heading>
                   <IngredientsList>
                     {selectRecipe.extendedIngredients.map((ingred) => (
                       <IngredientListItem key={ingred.original}>
@@ -133,6 +122,25 @@ const RecipePage = () => {
                     ))}
                   </IngredientsList>
                 </Columns.Column>
+                {selectRecipe.instructions && (
+                  <Columns.Column
+                    className="is-flex is-flex-direction-column"
+                    size={12}
+                  >
+                    <Heading renderAs="h2" size="4" className="mb-2">
+                      Instructions
+                    </Heading>
+                    <p
+                      style={{ fontSize: 20 }}
+                      dangerouslySetInnerHTML={{
+                        __html: selectRecipe.instructions.replace(
+                          '<ol>',
+                          '<ol style="list-style:inside">'
+                        ),
+                      }}
+                    />
+                  </Columns.Column>
+                )}
               </Columns>
             </Columns.Column>
           </Columns>
