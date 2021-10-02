@@ -28,6 +28,18 @@ const InfoListLeft = styled(InfoList)`
   padding-right: 15px;
   margin-right: 15px;
 `;
+
+const IngredientsList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  list-style-type: disc;
+`;
+
+const IngredientListItem = styled.li`
+  width: fit-content;
+  font-size: 20px;
+`;
 /* STYLED COMPONENTS END */
 
 const RecipePage = () => {
@@ -127,8 +139,15 @@ const RecipePage = () => {
                     ))}
                   </Columns>
                 </Columns.Column>
-                <Columns.Column>Test 1</Columns.Column>
-                <Columns.Column>Test 2</Columns.Column>
+                <Columns.Column className="is-flex is-justify-content-center">
+                  <IngredientsList>
+                    {selectRecipe.extendedIngredients.map((ingred) => (
+                      <IngredientListItem key={ingred.original}>
+                        {ingred.originalString}
+                      </IngredientListItem>
+                    ))}
+                  </IngredientsList>
+                </Columns.Column>
               </Columns>
             </Columns.Column>
           </Columns>
