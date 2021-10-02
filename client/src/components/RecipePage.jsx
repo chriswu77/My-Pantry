@@ -95,42 +95,27 @@ const RecipePage = () => {
                   className="is-flex is-justify-content-center"
                   size={12}
                 >
-                  <p
-                    dangerouslySetInnerHTML={{ __html: selectRecipe.summary }}
+                  <InfoListItem
+                    type="Vegetarian"
+                    value={selectRecipe.vegetarian}
+                  />
+                  <InfoListItem type="Vegan" value={selectRecipe.vegan} />
+                  <InfoListItem
+                    type="Gluten free"
+                    value={selectRecipe.glutenFree}
+                  />
+                  <InfoListItem
+                    type="Dairy free"
+                    value={selectRecipe.dairyFree}
                   />
                 </Columns.Column>
                 <Columns.Column
                   className="is-flex is-justify-content-center"
                   size={12}
                 >
-                  <div className="is-flex">
-                    <InfoListLeft>
-                      <InfoListItem
-                        type="Vegetarian"
-                        value={selectRecipe.vegetarian}
-                      />
-                      <InfoListItem type="Vegan" value={selectRecipe.vegan} />
-                      <InfoListItem
-                        type="Gluten free"
-                        value={selectRecipe.glutenFree}
-                      />
-                      <InfoListItem
-                        type="Dairy free"
-                        value={selectRecipe.dairyFree}
-                      />
-                    </InfoListLeft>
-                    <InfoList>
-                      <InfoListItem
-                        type="Very healthy"
-                        value={selectRecipe.veryHealthy}
-                      />
-                      <InfoListItem
-                        type="Very popular"
-                        value={selectRecipe.veryPopular}
-                      />
-                      <InfoListItem type="Cheap" value={selectRecipe.cheap} />
-                    </InfoList>
-                  </div>
+                  <p
+                    dangerouslySetInnerHTML={{ __html: selectRecipe.summary }}
+                  />
                 </Columns.Column>
                 <Columns.Column size={12}>
                   <Columns>
