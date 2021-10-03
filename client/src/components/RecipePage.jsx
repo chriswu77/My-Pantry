@@ -8,8 +8,13 @@ import axios from 'axios';
 import NavBar from './NavBar';
 import InfoListItem from './InfoListItem';
 import NutritionItem from './NutritionItem';
+import { ColumnContainer } from './shared';
 
 /* STYLED COMPONENTS */
+const DetailItem = styled.p`
+  padding: 1px 0;
+`;
+
 const IngredientsList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -54,36 +59,43 @@ const RecipePage = () => {
       <Section>
         <Container>
           <Columns>
-            <Columns.Column size={12}>
-              <Heading className="has-text-centered">
-                {selectRecipe.title}
-              </Heading>
+            <Columns.Column>
+              <Columns breakpoint="mobile" centered>
+                <Columns.Column narrow>
+                  <img src={selectRecipe.image} alt={selectRecipe.title} />
+                </Columns.Column>
+                <Columns.Column
+                  className="is-flex is-flex-direction-column is-justify-content-space-between"
+                  narrow
+                >
+                  <Heading className="mb-0">{selectRecipe.title}</Heading>
+                  <ColumnContainer>
+                    <DetailItem>{`Servings: ${selectRecipe.servings}`}</DetailItem>
+                    <DetailItem>{`Cook time: ${selectRecipe.readyInMinutes} minutes`}</DetailItem>
+                  </ColumnContainer>
+                  <ColumnContainer>
+                    <DetailItem>{`Spoonacular score: ${selectRecipe.spoonacularScore}`}</DetailItem>
+                    <DetailItem>{`Likes: ${selectRecipe.aggregateLikes}`}</DetailItem>
+                  </ColumnContainer>
+                  <ColumnContainer>
+                    <InfoListItem
+                      type="Vegetarian"
+                      value={selectRecipe.vegetarian}
+                    />
+                    <InfoListItem type="Vegan" value={selectRecipe.vegan} />
+                    <InfoListItem
+                      type="Gluten free"
+                      value={selectRecipe.glutenFree}
+                    />
+                    <InfoListItem
+                      type="Dairy free"
+                      value={selectRecipe.dairyFree}
+                    />
+                  </ColumnContainer>
+                </Columns.Column>
+              </Columns>
             </Columns.Column>
-            <Columns.Column
-              className="is-flex is-flex-direction-column is-align-items-center"
-              size={12}
-            >
-              <p>{`Spoonacular score: ${selectRecipe.spoonacularScore}`}</p>
-              <p>{`Likes: ${selectRecipe.aggregateLikes}`}</p>
-            </Columns.Column>
-            <Columns.Column
-              className="is-flex is-justify-content-center"
-              size={12}
-            >
-              <img src={selectRecipe.image} alt={selectRecipe.title} />
-            </Columns.Column>
-            <Columns.Column
-              className="is-flex is-justify-content-center"
-              size={12}
-            >
-              <InfoListItem type="Vegetarian" value={selectRecipe.vegetarian} />
-              <InfoListItem type="Vegan" value={selectRecipe.vegan} />
-              <InfoListItem
-                type="Gluten free"
-                value={selectRecipe.glutenFree}
-              />
-              <InfoListItem type="Dairy free" value={selectRecipe.dairyFree} />
-            </Columns.Column>
+
             <Columns.Column size={12}>
               <Columns>
                 {selectRecipe.nutrition.nutrients.map((nutrient) => (
@@ -91,6 +103,7 @@ const RecipePage = () => {
                 ))}
               </Columns>
             </Columns.Column>
+
             <Columns.Column className="is-flex is-flex-direction-column">
               <Heading renderAs="h2" size="4" className="mb-2">
                 Ingredients
@@ -103,6 +116,7 @@ const RecipePage = () => {
                 ))}
               </IngredientsList>
             </Columns.Column>
+
             {selectRecipe.instructions && (
               <Columns.Column
                 className="is-flex is-flex-direction-column"
@@ -122,6 +136,7 @@ const RecipePage = () => {
                 />
               </Columns.Column>
             )}
+
             <Columns.Column>
               <p>
                 Read the detailed instructions on{' '}

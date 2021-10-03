@@ -16,9 +16,9 @@ const InfoListItem = (props) => {
   const { type, value } = props;
 
   return (
-    <StyledItem className={type === 'Dairy free' ? 'mr-0' : 'mr-5'}>
+    <StyledItem>
       <StyledIcon value={value} icon={value ? faCheck : faTimes} />
-      <p className="ml-2">{type}</p>
+      <p className={value ? 'ml-2' : 'ml-3'}>{type}</p>
     </StyledItem>
   );
 };
