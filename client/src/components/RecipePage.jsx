@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { Section, Container, Columns, Heading } from 'react-bulma-components';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from './NavBar';
@@ -30,24 +29,12 @@ const IngredientListItem = styled.li`
 
 const RecipePage = () => {
   const { id } = useParams();
-  const recipes = useSelector((state) => state.recipes.recipes);
   const [selectRecipe, setSelectRecipe] = useState();
 
   useEffect(async () => {
-    if (recipes.length > 0) {
-      const foundRecipe = recipes.find((recipe) => recipe.id === Number(id));
-
-      if (foundRecipe) {
-        setSelectRecipe(foundRecipe);
-      } else {
-        const results = await axios.get(`/api/recipes/${id}`);
-        setSelectRecipe(results.data);
-      }
-    } else {
-      const results = await axios.get(`/api/recipes/${id}`);
-      setSelectRecipe(results.data);
-    }
-  }, [recipes]);
+    const results = await axios.get(`/api/recipes/${id}`);
+    setSelectRecipe(results.data);
+  }, []);
 
   if (!selectRecipe) {
     return null;
