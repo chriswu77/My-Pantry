@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 const User = require('../database/models/user');
 const Ingredient = require('../database/models/ingredient');
-const Recipe = require('../database/models/recipe');
 const {
   searchIngredients,
   searchRecipesByIngredients,
   getRecipeInfo,
 } = require('../apiHelpers/spoonacular');
-const { resolveIngredient } = require('./helperFunctions');
+const { resolveIngredient, resolveRecipe } = require('./helperFunctions');
 const { getOrSetCache } = require('../redis/helpers');
 
 const controllers = {
@@ -80,7 +79,6 @@ const controllers = {
         }
       );
 
-      // const results = await searchIngredients(query);
       res.status(200).send(results);
     } catch (err) {
       res.status(400).send(err);
@@ -170,11 +168,18 @@ const controllers = {
     const { ingredientsArr, ignorePantry = false } = req.body;
 
     try {
-      const searchResults = await searchRecipesByIngredients(
-        ingredientsArr,
-        ignorePantry
+      const data = await getOrSetCache(
+        `recipes/search:${ingredientsArr.join()}`,
+        async () => {
+          const searchResults = await searchRecipesByIngredients(
+            ingredientsArr,
+            ignorePantry
+          );
+          return searchResults;
+        }
       );
-      res.status(200).send(searchResults);
+
+      res.status(200).send(data);
     } catch (err) {
       res.status(400).send(err);
     }
@@ -184,8 +189,14 @@ const controllers = {
     const { recipeId } = req.params;
 
     try {
-      const results = await getRecipeInfo(recipeId);
-      res.status(200).send(results);
+      const recipeData = await getOrSetCache(
+        `recipes:${recipeId}`,
+        async () => {
+          const data = await getRecipeInfo(recipeId);
+          return data;
+        }
+      );
+      res.status(200).send(recipeData);
     } catch (err) {
       res.status(404).send(err);
     }
@@ -197,28 +208,9 @@ const controllers = {
 
     try {
       const foundUser = await User.findById(userId);
-      const foundRecipe = await Recipe.findOne({ id: recipeId });
 
-      if (foundRecipe) {
-        const alreadyHasRecipe = await User.findOne({
-          recipes: foundRecipe._id,
-        });
-
-        if (alreadyHasRecipe) {
-          res.status(200).send('User already added this recipe');
-        } else {
-          foundUser.recipes.push(foundRecipe);
-          await foundUser.save();
-          res.status(200).send('Saved recipe to user');
-        }
-      } else {
-        const recipeData = await getRecipeInfo(recipeId);
-        const newRecipe = new Recipe(recipeData);
-        await newRecipe.save();
-        foundUser.recipes.push(newRecipe);
-        await foundUser.save();
-        res.status(200).send('Saved recipe to user');
-      }
+      await resolveRecipe(recipeId, foundUser);
+      res.status(200).send('Saved recipe to user');
     } catch (err) {
       res.status(400).send(err);
     }
