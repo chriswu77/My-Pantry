@@ -35,3 +35,5 @@ users
   .post(usersController.addRecipe);
 
 users.route('/:userId/recipes/:recipeId').delete(usersController.removeRecipe);
+
+export default users;
