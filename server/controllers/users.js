@@ -143,4 +143,4 @@ const usersController = {
   },
 };
 
-export default usersController;
+module.exports = usersController;

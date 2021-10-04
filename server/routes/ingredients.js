@@ -1,8 +1,6 @@
 const ingredients = require('express').Router();
 const ingredientsController = require('../controllers/ingredients');
 
-ingredients
-  .route('/ingredients/search')
-  .post(ingredientsController.searchIngredient);
+ingredients.route('/search').post(ingredientsController.searchIngredient);
 
-export default ingredients;
+module.exports = ingredients;

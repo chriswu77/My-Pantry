@@ -36,4 +36,4 @@ users
 
 users.route('/:userId/recipes/:recipeId').delete(usersController.removeRecipe);
 
-export default users;
+module.exports = users;

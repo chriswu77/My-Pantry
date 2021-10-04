@@ -20,4 +20,4 @@ const ingredientsController = {
   },
 };
 
-export default ingredientsController;
+module.exports = ingredientsController;

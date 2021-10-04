@@ -44,4 +44,4 @@ const recipesController = {
   },
 };
 
-export default recipesController;
+module.exports = recipesController;
