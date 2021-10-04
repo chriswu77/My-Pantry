@@ -8,6 +8,7 @@ const {
   getRecipeInfo,
 } = require('../apiHelpers/spoonacular');
 const { resolveIngredient } = require('./helperFunctions');
+const { getOrSetCache } = require('../redis/helpers');
 
 const controllers = {
   createUser: async (req, res) => {
@@ -71,7 +72,15 @@ const controllers = {
     console.log('search ingredients');
     try {
       const { query } = req.body;
-      const results = await searchIngredients(query);
+      const results = await getOrSetCache(
+        `ingredients/query:${query}`,
+        async () => {
+          const data = await searchIngredients(query);
+          return data;
+        }
+      );
+
+      // const results = await searchIngredients(query);
       res.status(200).send(results);
     } catch (err) {
       res.status(400).send(err);
