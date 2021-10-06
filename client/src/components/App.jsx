@@ -5,7 +5,7 @@ import axios from 'axios';
 import { authActions } from '../../store/auth';
 import { ingredientsActions } from '../../store/ingredients';
 import { recipesActions } from '../../store/recipes';
-import LoginForm from './LoginForm';
+import LoginPage from './LoginPage';
 import SignUpForm from './SignUpForm';
 import Home from './Home';
 import PrivateRoute from './PrivateRoute';
@@ -49,7 +49,7 @@ const App = () => {
   return (
     <div id="app">
       <Switch>
-        <Route exact path="/login" component={LoginForm} />
+        <Route exact path="/login" component={LoginPage} />
         <Route exact path="/signup" component={SignUpForm} />
         <PrivateRoute
           path="/recipes/:id"
