@@ -13,6 +13,8 @@ const CenteredDiv = styled.div`
 
 const ErrorMessage = styled(Notification)`
   width: fit-content;
+  padding: 10px;
+  margin: 15px 0 0 0 !important;
 `;
 
 const Background = styled.section`
