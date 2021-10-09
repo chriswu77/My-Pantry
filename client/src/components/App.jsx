@@ -6,7 +6,7 @@ import { authActions } from '../../store/auth';
 import { ingredientsActions } from '../../store/ingredients';
 import { recipesActions } from '../../store/recipes';
 import LoginPage from './LoginPage';
-import SignUpForm from './SignUpForm';
+import SignUpPage from './SignUpPage';
 import Home from './Home';
 import PrivateRoute from './PrivateRoute';
 import RecipePage from './RecipePage';
@@ -50,7 +50,7 @@ const App = () => {
     <div id="app">
       <Switch>
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/signup" component={SignUpForm} />
+        <Route exact path="/signup" component={SignUpPage} />
         <PrivateRoute
           path="/recipes/:id"
           component={RecipePage}

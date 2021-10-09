@@ -1,13 +1,9 @@
 import styled from 'styled-components';
+import { Hero, Form, Button, Box, Notification } from 'react-bulma-components';
 
 const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Background = styled.section`
-  background: url(/images/loginBackground.png) no-repeat center center fixed;
-  background-size: cover;
 `;
 
 const CenteredDiv = styled.div`
@@ -15,4 +11,17 @@ const CenteredDiv = styled.div`
   justify-content: center;
 `;
 
-export { ColumnContainer, Background, CenteredDiv };
+const ErrorMessage = styled(Notification)`
+  width: fit-content;
+`;
+
+const Background = styled.section`
+  background: url(/images/loginBackground.png) no-repeat center center fixed;
+  background-size: cover;
+`;
+
+const FormBox = styled(Box)`
+  width: 500px;
+`;
+
+export { ColumnContainer, Background, CenteredDiv, ErrorMessage, FormBox };

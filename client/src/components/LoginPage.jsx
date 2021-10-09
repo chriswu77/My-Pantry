@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Hero, Form, Button, Box, Notification } from 'react-bulma-components';
+import { Hero, Form, Button } from 'react-bulma-components';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { authActions } from '../../store/auth';
 import NavBar from './NavBar';
-import { Background, CenteredDiv } from './shared';
+import { Background, CenteredDiv, ErrorMessage, FormBox } from './shared';
 
-const LoginFormBox = styled(Box)`
-  width: 500px;
-`;
-
-const ErrorMessage = styled(Notification)`
-  width: fit-content;
-`;
-
+// styled components
 const SignUpDiv = styled.div`
   display: flex;
   align-items: center;
@@ -27,6 +20,7 @@ const SignUpLink = styled(Button)`
   text-decoration: underline;
   margin-left: 5px;
 `;
+// end
 
 const LoginPage = () => {
   const history = useHistory();
@@ -63,7 +57,7 @@ const LoginPage = () => {
       <NavBar />
       <Hero size="fullheight" hasNavbar renderAs={Background}>
         <Hero.Body renderAs={CenteredDiv} className="p-0">
-          <LoginFormBox id="login-form">
+          <FormBox id="login-form">
             <form onSubmit={onSubmit}>
               <Form.Field>
                 <Form.Label>Username</Form.Label>
@@ -100,7 +94,7 @@ const LoginPage = () => {
                 Sign up
               </SignUpLink>
             </SignUpDiv>
-          </LoginFormBox>
+          </FormBox>
         </Hero.Body>
       </Hero>
     </>
