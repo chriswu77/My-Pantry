@@ -18,12 +18,10 @@ const App = () => {
 
   const getUser = async () => {
     const response = await axios.get('/api/users');
-    console.log('get user response: ', response.data);
+
     if (response.data.userId) {
-      console.log('saving user id in state');
       dispatch(authActions.logIn(response.data.userId));
     } else {
-      console.log('no user found');
       dispatch(authActions.logOut());
     }
     setWasInitialized(true);
