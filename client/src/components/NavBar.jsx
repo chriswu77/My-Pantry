@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Navbar } from 'react-bulma-components';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,6 +10,8 @@ const Logo = styled.img`
 `;
 
 const NavBar = () => {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   const [isActive, setIsActive] = useState(false);
 
   const toggleActive = () => {
@@ -23,14 +26,16 @@ const NavBar = () => {
         </Navbar.Item>
         <Navbar.Burger onClick={toggleActive} />
       </Navbar.Brand>
-      <Navbar.Menu className={isActive ? 'is-active' : ''}>
-        <Navbar.Container align="right">
-          <Navbar.Item>Favorites</Navbar.Item>
-          <Navbar.Item>
-            <LogOutButton />
-          </Navbar.Item>
-        </Navbar.Container>
-      </Navbar.Menu>
+      {isLoggedIn && (
+        <Navbar.Menu className={isActive ? 'is-active' : ''}>
+          <Navbar.Container align="right">
+            <Navbar.Item>Favorites</Navbar.Item>
+            <Navbar.Item>
+              <LogOutButton />
+            </Navbar.Item>
+          </Navbar.Container>
+        </Navbar.Menu>
+      )}
     </Navbar>
   );
 };
