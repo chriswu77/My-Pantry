@@ -62,14 +62,16 @@ const SearchBar = () => {
       await axios.post(`/api/users/${userId}/ingredients`, {
         ingredients: values,
       });
+
       // get back ingredients from backend with get request
       const response = await axios.get(`/api/users/${userId}/ingredients`);
+
       // update redux ingredients state
       dispatch(ingredientsActions.set(response.data));
+
       // remove selected from local state to clear search
       setQuery('');
       setValues([]);
-      console.log('added ingredients');
     } catch (err) {
       console.log(err);
     }
