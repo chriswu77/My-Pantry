@@ -1,29 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import {
-  Hero,
-  Columns,
-  Container,
-  Form,
-  Button,
-  Box,
-  Notification,
-} from 'react-bulma-components';
+import { Hero, Form, Button, Box, Notification } from 'react-bulma-components';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { authActions } from '../../store/auth';
 import NavBar from './NavBar';
-
-const Background = styled.section`
-  background: url(/images/loginBackground.png) no-repeat center center fixed;
-  background-size: cover;
-`;
-
-const CenteredDiv = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+import { Background, CenteredDiv } from './shared';
 
 const LoginFormBox = styled(Box)`
   width: 500px;

@@ -5,4 +5,14 @@ const ColumnContainer = styled.div`
   flex-direction: column;
 `;
 
-export { ColumnContainer };
+const Background = styled.section`
+  background: url(/images/loginBackground.png) no-repeat center center fixed;
+  background-size: cover;
+`;
+
+const CenteredDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export { ColumnContainer, Background, CenteredDiv };
