@@ -4,10 +4,8 @@ const { resolveIngredient, resolveRecipe } = require('../helperFunctions');
 
 const usersController = {
   createUser: async (req, res) => {
-    console.log('user sign up');
-
     try {
-      const { username, password } = req.body;
+      const { username } = req.body;
 
       const foundUser = await User.findOne({ username });
 
